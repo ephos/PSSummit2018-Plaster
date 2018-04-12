@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest schemaVersion="1.1" templateType="Project" xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+
+  <metadata>
+    <name>CustomModule</name>
+    <id>818d999e-8405-4deb-b2cd-f15f9129a209</id>
+    <version>2.0.0</version>
+    <title>Custom Plaster Template for My Modules</title>
+    <description>Now with class support and 100% more multichoice!</description>
+    <author>Rob</author>
+    <tags>Module</tags>
+  </metadata>
+  
+  <parameters>
+    <parameter name="ModuleName" type="text" prompt="Enter the name of your module" />
+    <parameter name="ModuleDesc" type="text" prompt="Brief description on this module" />
+    <parameter name="ModuleVersion" type="text" prompt="Version number" default='0.0.1' />
+    <parameter name="ModuleCompanyName" type="text" prompt="Company name" default='N/A' />
+    <parameter name="ModuleAuthor" type="user-fullname" prompt="Author" default='Rob'/>
+    <parameter name="ModuleEmail" type="user-email" prompt="Email" default="project@email.com"/>
+
+    <!-- Filed Github issue 278 (https://github.com/PowerShell/Plaster/issues/278) for this, will be fixed in 1.1. -->
+    <parameter name="ModulePowerShellVersion" type="choice" store="text" prompt="Minimum PowerShell version" default="1">
+      <choice label="&amp;4.0" help="Minimum PowerShell Version required is 4.0 (Legacy)" value="4.0" />
+      <choice label="&amp;5.1" help="Minimum PowerShell Version required is 5.1" value="5.1" />
+      <choice label="&amp;6.0" help="Minimum PowerShell Version required is 6.0 (PowerShell Core/.Net Standard 2.x Compliant)" value="6.0" />
+    </parameter>
+
+    <parameter name="ModuleFolders" type="multichoice" prompt="Which folders should be created in this module project?" default='0,1'>
+      <choice label="&amp;Help" help="Creates a en-US folder within the module root for about_help files." value="Help" />
+      <choice label="&amp;Classes" help="Creates a Classes folder within the module root for .cs files." value="Classes" />
+      <choice label="&amp;Binaries" help="Create a binaries folder within the module root for binary/*.dll files." value="Binaries" />
+      <choice label="&amp;Manifests" help="Create a config folder within the module root for various json/manifest files?" value="Manifests" />
+      <choice label="&amp;Scripts" help="Create a scripts folder within the module root for non function scripts?" value="Scripts" />
+    </parameter>
+
+    <parameter name="ProjectPester" type="choice" prompt="Include default module manifest pester tests?" default='0'>
+      <choice label="&amp;Yes" help="Adds a pester tests folder with meta tests at the project root" value="Yes" />
+      <choice label="&amp;No" help="Does not add a pester tests folder" value="No" />
+    </parameter>
+    
+    <parameter name='Editor' type='choice' prompt='Select a editor for editor integration (or None):' default='1' store='text' >
+      <choice label='&amp;None' help="No editor specified." value="None"/>
+      <choice label='Visual Studio &amp;Code' help="Your editor is Visual Studio Code." value="VSCode"/>
+    </parameter>
+  </parameters>
+
+  <content>
+    <newModuleManifest destination='${PLASTER_PARAM_ModuleName}\src\${PLASTER_PARAM_ModuleName}.psd1' 
+        moduleVersion='$PLASTER_PARAM_ModuleVersion' 
+        rootModule='${PLASTER_PARAM_ModuleName}.psm1' 
+        author='$PLASTER_PARAM_ModuleAuthor'
+        description='$PLASTER_PARAM_ModuleDesc'
+        companyName='$PLASTER_PARAM_ModuleCompanyName'
+        powerShellVersion='$PLASTER_PARAM_ModulePowerShellVersion'
+        encoding='UTF8-NoBOM'
+        openInEditor="true"/>
+        
+    <!-- Please see file contents for additional tokenization base on Plaster manifest answers. -->
+    <templateFile source='template.psm1' destination='${PLASTER_PARAM_ModuleName}\src\${PLASTER_PARAM_ModuleName}.psm1'/>
+
+    <message>&#10;&#10;Scaffolding your PowerShell Module, please stay awesome...&#10;&#10;&#10;</message>
+    <message> Creating you folders for module: $PLASTER_PARAM_ModuleName </message>
+
+    <file destination='${PLASTER_PARAM_ModuleName}\src\Functions\Public\' source='' />
+    <templateFile source='.gitkeep' destination='${PLASTER_PARAM_ModuleName}\src\Functions\Public\.gitkeep' />
+    <file destination='${PLASTER_PARAM_ModuleName}\src\Functions\Private\' source='' />
+    <templateFile source='.gitkeep' destination='${PLASTER_PARAM_ModuleName}\src\Functions\Private\.gitkeep' />
+
+    <file condition='$PLASTER_PARAM_ModuleFolders -contains "Help"' destination='${PLASTER_PARAM_ModuleName}\src\en-US\' source='' />
+    <templateFile condition='$PLASTER_PARAM_ModuleFolders -contains "Help"' source='about_template.help.txt.ps1' destination='${PLASTER_PARAM_ModuleName}\src\en-US\about_${PLASTER_PARAM_ModuleName}.help.txt' />
+    <file condition='$PLASTER_PARAM_ModuleFolders -contains "Classes"' destination='${PLASTER_PARAM_ModuleName}\src\Classes\' source='' />
+    <templateFile condition='$PLASTER_PARAM_ModuleFolders -contains "Classes"' source='template.cs.ps1' destination='${PLASTER_PARAM_ModuleName}\src\Classes\${PLASTER_PARAM_ModuleName}.cs' />
+    <file condition='$PLASTER_PARAM_ModuleFolders -contains "Binaries"' destination='${PLASTER_PARAM_ModuleName}\src\Binaries\' source='' />
+    <templateFile condition='$PLASTER_PARAM_ModuleFolders -contains "Binaries"' source='.gitkeep' destination='${PLASTER_PARAM_ModuleName}\src\Binaries\.gitkeep' />
+    <file condition='$PLASTER_PARAM_ModuleFolders -contains "Manifests"' destination='${PLASTER_PARAM_ModuleName}\src\Config\' source='' />
+    <templateFile condition='$PLASTER_PARAM_ModuleFolders -contains "Manifests"' source='.gitkeep' destination='${PLASTER_PARAM_ModuleName}\src\Config\.gitkeep' />
+    <file condition='$PLASTER_PARAM_ModuleFolders-contains "Scripts"' destination='${PLASTER_PARAM_ModuleName}\src\Scripts\' source='' />
+    <templateFile condition='$PLASTER_PARAM_ModuleFolders -contains "Scripts"' source='placeholder.ps1' destination='${PLASTER_PARAM_ModuleName}\src\Scripts\placeholder.ps1' />
+
+    <templateFile source='ReadMe.md' destination='${PLASTER_PARAM_ModuleName}\ReadMe.md' />
+
+    <message> Setting pester settings for: $PLASTER_PARAM_ModuleName </message>
+    <file condition='$PLASTER_PARAM_ProjectPester -eq "Yes"' destination='${PLASTER_PARAM_ModuleName}\tests\' source='' />
+    <templateFile source='Manifest.Tests.ps1' destination='${PLASTER_PARAM_ModuleName}\tests\Manifest.Tests.ps1'/>
+    
+    <message> Setting editor workspace settings for: $PLASTER_PARAM_Editor </message>
+    <file condition="($PLASTER_PARAM_Editor -eq 'VSCode')"
+      source='editor\VSCode\settings.json'
+      destination='${PLASTER_PARAM_ModuleName}\.vscode\settings.json' />
+  
+    <message> Creating VSCode files </message>
+    <file condition="(($PLASTER_PARAM_Editor -eq 'VSCode') -and ($PLASTER_PARAM_ProjectPester -eq 'Yes'))" 
+      source='editor\VSCode\tasks.json' 
+      destination='${PLASTER_PARAM_ModuleName}\.vscode\tasks.json' />
+
+    <message> Verifying a minimum version of Pester (4.0.3) is installed. </message>
+    <requireModule name="Pester" condition="$PLASTER_PARAM_ProjectPester -eq 'Yes'" minimumVersion="4.0.3"
+        message="Without Pester, you will not be able to run the provided Pester test to validate your module manifest file.`nWithout version 3.4.0, VS Code will not display Pester warnings and errors in the Problems panel."/>
+
+  </content>   
+</plasterManifest>
