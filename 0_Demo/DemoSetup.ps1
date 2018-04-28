@@ -12,11 +12,11 @@ function Start-Demo
     )
     process
     {
-        try 
+        try
         {
             Test-Path -Path $Path
             New-Variable -Scope Global -Name demoPath -Value $Path -Force -ErrorAction SilentlyContinue
-            Push-Location -Path $demoPath 
+            Push-Location -Path $demoPath
         }
         catch
         {
@@ -31,13 +31,13 @@ function Start-Demo
         if (Test-Path -Path '.\plaster-xml.code-snippets')
         {
             Push-Location -Path $demoPath
-            Copy-Item -Path '.\plaster-xml.code-snippets' -Destination 'C:\Users\pleaur\AppData\Roaming\Code\User\snippets' -Force
+            Copy-Item -Path '.\plaster-xml.code-snippets' -Destination "$Env:USERPROFILE\AppData\Roaming\Code\User\snippets" -Force
             Pop-Location
-            Get-ChildItem -Path 'C:\Users\pleaur\AppData\Roaming\Code\User\snippets\plaster-xml.code-snippets'
+            Get-ChildItem -Path "$Env:USERPROFILE\AppData\Roaming\Code\User\snippets\plaster-xml.code-snippets"
         }
         else
         {
-            Write-Warning -Message 'Missing plaster-xml.code-snippets, cannot copy.'    
+            Write-Warning -Message 'Missing plaster-xml.code-snippets, cannot copy.'
         }
 
         if (Test-Path -Path "$($Env:USERPROFILE)\Desktop\ZoomIt.exe")
@@ -65,5 +65,5 @@ function Start-Demo
         }
     }
 }
-Start-Demo -Path 'C:\Users\pleaur\Desktop\code\git\PSSummit2018-Plaster'
+Start-Demo -Path "$Env:USERPROFILE\Desktop\code\git\PSSummit2018-Plaster"
 #Clear-Host

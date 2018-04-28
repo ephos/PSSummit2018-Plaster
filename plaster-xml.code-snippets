@@ -49,8 +49,8 @@
         "prefix": "Plaster-Content-File",
         "body": [
             "<file 'source='${1:SourceFile}'",
-            "   destination='${3:Destination file name}'/>",
-            "   condition='${2:Condition}'",
+            "   destination='${2:Destination file name}'/>",
+            "   condition='${3:Condition}'",
         ],
         "description": "A Plaster file snippet, includes condition which can be deleted."
     },
@@ -58,9 +58,9 @@
         "scope": "xml",
         "prefix": "Plaster-Content-Templatefile",
         "body": [
-            "<templateFile 'source='${1:1:Source template file}'",
-            "   destination='${3:Destination file name}'/>",
-            "   condition='${2:Condition}'",
+            "<templateFile 'source='${1:Source template file}'",
+            "   destination='${2:Destination file name}'/>",
+            "   condition='${3:Condition}'",
         ],
         "description": "A Plaster templatefile snippet, includes condition which can be deleted."
     }

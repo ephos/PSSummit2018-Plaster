@@ -11,7 +11,7 @@ code $env:USERPROFILE\Documents\PowerShell\Modules\Plaster\1.1.3\Templates\NewPo
 # Plaster Manifest Parameters are Dynamically Invoke-Plaster function parameters.
 # I've found this to sometimes be flakey but cool when it works...
 Invoke-Plaster #Tab through the parameters to see there are only the TemplatePath, DestinationPath, NoLogo, Force.
-Invoke-Plaster -TemplatePath 'C:\Users\pleaur\Documents\PowerShell\Modules\Plaster\1.1.3\Templates\NewPowerShellScriptModule'
+Invoke-Plaster -TemplatePath "$Env:USERPROFILE\Documents\PowerShell\Modules\Plaster\1.1.3\Templates\NewPowerShellScriptModule"
 # Tab through and see the new parameters which match the PlasterManifest files parameters.
 
 # Manifest Variables and Usage

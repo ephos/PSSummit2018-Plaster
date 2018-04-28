@@ -4,7 +4,7 @@ Before we start building our own template, lets take a quick look at the anatomy
 
 ```powershell
 Get-PlasterTemplate
-code 'C:\Users\pleaur\Documents\PowerShell\Modules\Plaster\1.1.3\Templates\NewPowerShellScriptModule\'
+code 'C:\Users\username\Documents\PowerShell\Modules\Plaster\1.1.3\Templates\NewPowerShellScriptModule\'
 ```
 
 The main thing you'll see is the manifest, this is the magic file that orchestrates most of this!
@@ -60,7 +60,7 @@ A interesting note about Plaster parameters.  On the `Invoke-Plaster` function, 
 
 ```powershell
 Invoke-Plaster #Tab through the parameters to see there are only the TemplatePath, DestinationPath, NoLogo, Force etc
-Invoke-Plaster -TemplatePath 'C:\Users\pleaur\Documents\PowerShell\Modules\Plaster\1.1.3\Templates\NewPowerShellScriptModule' #Tab through and see the new parameters which match the PlasterManifest files parameters.
+Invoke-Plaster -TemplatePath 'C:\Users\username\Documents\PowerShell\Modules\Plaster\1.1.3\Templates\NewPowerShellScriptModule' #Tab through and see the new parameters which match the PlasterManifest files parameters.
 ```
 
 Parameter values can be referenced in Plaster by using `PLASTER_PARAM_ParameterName`.  In addition to parameters that you create, Plaster ships with some built-in variables like *PLASTER_DestinationPath*, *PLASTER_Year*, *PLASTER_Version*.  These are well documented in the help that ships with Plaster.

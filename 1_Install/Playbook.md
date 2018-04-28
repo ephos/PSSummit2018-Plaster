@@ -33,7 +33,7 @@ Author       : Plaster
 Version      : 1.1.0
 Description  : Creates files for a simple, non-shared PowerShell script module.
 Tags         : {Module, ScriptModule, ModuleManifest}
-TemplatePath : C:\Users\pleaur\Documents\PowerShell\Modules\plaster\1.1.3\Templates\NewPowerShellScriptModule
+TemplatePath : C:\Users\username\Documents\PowerShell\Modules\plaster\1.1.3\Templates\NewPowerShellScriptModule
 ```
 
 Most of these fields are self explanatory (like title, author etc. ), the notable things is that you can version these, tag them, and see where the physically reside on the file system.

@@ -19,7 +19,7 @@ Author       :
 Version      : 0.2.0
 Description  : Scaffolds the files required for GitBook Documentation.
 Tags         : Documentation
-TemplatePath : C:\Users\pleaur\Documents\PowerShell\Modules\documentarian\0.10.0\GitBook
+TemplatePath : C:\Users\username\Documents\PowerShell\Modules\documentarian\0.10.0\GitBook
 ```
 
 ## Remaining Notes

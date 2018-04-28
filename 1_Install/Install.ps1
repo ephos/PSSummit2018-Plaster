@@ -13,4 +13,4 @@ Get-Command -Module Plaster
 Get-PlasterTemplate
 
 # Alternatively if you have a directory which houses some templates you already created you can specify the path parameter set.
-Get-PlasterTemplate -Path C:\Users\pleaur\Desktop\code\git\PlasterTemplates\ -Recurse
+Get-PlasterTemplate -Path "$Env:USERPROFILE\Desktop\code\git\PlasterTemplates\" -Recurse
